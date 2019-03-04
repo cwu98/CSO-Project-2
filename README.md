@@ -1,6 +1,6 @@
 # Project 1
 
-__Due date: Sunday, March 10 at 11:55pm.__
+__Due date: Tuesday, March 12 at 11:55pm.__
 
 ---
 **You may discuss any of the assignments with your classmates and instructors (or anyone else) but
@@ -23,14 +23,28 @@ To compile and build individual problems run:
 
     make problem1
     make problem2
-    ...
 
-To run simple tests on each program you can execute
+To run simple tests  on each program you can execute
 
-    ./problem1 < test1.in
-    ./problem2 < test2.in
-    ...
+    make run_problem1
+    make run_problem2
+
 (You should test your code much more extensively than these simple test cases provided with the assignment do.)
+
+To run memory tests on each program you can execute
+
+    make test_problem1
+    make test_problem2
+
+If the program does not have any memory leaks, you should see the lines similar to: 
+```
+==27311== HEAP SUMMARY:
+==27311==     in use at exit: 0 bytes in 0 blocks
+==27311==   total heap usage: 23 allocs, 23 frees, 8,176 bytes allocated
+==27311==
+==27311== All heap blocks were freed -- no leaks are possible
+```
+
 
 To remove all previously compiled and built files, run
 
@@ -60,10 +74,10 @@ declarations for any other functions that you create.
 directives that prevent the declarations to be included multiple times within a single program
 (this confuses the linker). Here is an example of a header guard:
 
-    #ifndef FILENAME_H
-    #define FILENAME_H
-      //content of the file  
-    #endif
+      #ifndef FILENAME_H_
+      #define FILENAME_H_
+        //content of the file  
+      #endif
 
 - There are a few ways to compile your programs (although you should just use the
   provided `Makefile` to do so). Assume that the program consists of three source code
@@ -89,17 +103,27 @@ directives that prevent the declarations to be included multiple times within a 
     - NEVER include the list of the header files when compiling the code using
     `gcc`. The header files are brought in by the preprocessor when it scans your code.
 
-    
 
+## Compiling with a math library
+
+In order to use any functions declared in the `math.h` header file, you need to link
+your programs with the math library. To do so, you need to add `-lm` flag during the
+execution of gcc. For example:
+
+```
+gcc problem2.c -lm -o problem2
+```
+
+(`-l` option specifies that what follows is the library name. `m` is the name of the math library.)
 
 
 ## Programming requirements:
 
-- The programs should be leak-free: any memory that is allocated should be freed before the program terminates. (Although in this project, there should not be a need to allocate any memory. )
-- __The programs have to be documented! Any file that you edit should have preamble
+- __The programs should be leak-free: any memory that is allocated should be freed before the program terminates.__
+- The programs have to be documented! Any file that you edit should have preamble
  including your name as the author, description of the purpose of the program and
  inline comments in the functions that you implement. All functions except for `main()` should
- have descriptions of function parameters, returned value and a summary of what the function does.__
+ have descriptions of function parameters, returned value and a summary of what the function does.
 - The code has to build correctly using the provided `Makefile`.
 - The code has to follow C programming conventions.
 - The code has to be formatted properly.  
@@ -111,22 +135,76 @@ Your commits should be distributed over time - they should not be all made withi
 
 ## Problem 1 (50 points)
 
+This program performs basic operations on a binary search tree.
+It reads a sequence of instructions from the standard input stream
+and outputs the results to the standard output stream.
 
-__Input__
+The program accepts the following instructions:
 
-__Output__
+- `a value` and the `value` to the tree
+- `s` remove the smallest value stored in the current tree (should have no effect
+  if the current tree is empty)
+- `l` remove the largest value stored in the current tree (should have no effect
+  if the current tree is empty)
+- `p` print the values stored in the current tree in order of the inorder traversal
+
+The `main` function in `problem1.c` reads and parses the input stream and calls
+appropriate functions to perform the instructions. __Your task is to implement
+those functions so that the output produced is correct.__
 
 
 __Example__
 
-Input:
+__Input:__
+```
+a park
+a snow
+a zoo
+a car
+a dinner
+p
+s
+l
+p
+a crab
+a rank
+a herb
+a rabbit
+a sand
+p
+l
+s
+p
+s
+s
+l
+l
+p
+l
+s
+p
+s
+p
+```
 
-Output:
+__Output:__
+```
+car dinner park snow zoo
+dinner park snow
+crab dinner herb park rabbit rank sand snow
+dinner herb park rabbit rank sand
+park rabbit
+
+
+```
+(notice that the last two lines of the output are blanks!).
 
 
 
-__Deliverables__
-Implementation of the program in `problem1.c` file.
+__Deliverables:__
+Implementation of the functions in `bst.c` file. You may add
+declarations to the file `bst.h` (you have to upload the modified
+  file if you do so).
 
 
 
@@ -135,57 +213,55 @@ Implementation of the program in `problem1.c` file.
 ## Problem 2 (50 points)
 
 
-Recall the IEEE754-like encoding for the floating point numbers represented using.
+This program performs basic operations on floating point numbers to illustrate
+how they are encoded using the IEEE754 standard.
+It reads a sequence of floating point numbers from the standard input stream
+and outputs the results to the standard output stream.
+The input is terminated by a zero.
+
+
+Recall the IEEE754 encoding for the floating point numbers represented using
+32 bits (`float` type in C).
 
 Your task is to _disassemble_ a floating point number into three separate components:
-- sign
-- exponent
-- mantissa/significand
+- `s` sign (either 1 or -1)
+- `E` exponent
+- `M` mantissa/significand
 
-Your program should read floating point numbers from the standard input stream.
-The program should store each of them as a `float` (not as a `double`).
-The program should print the three components into which each of those numbers is _disassembled_
-with a single space between each.
-Notice that the sign and the exponent are always going to be integers: (1 or -1 for
-the sign). The mantissa should be printed as a floating point number with exactly 10 digits
-after the decimal.
+The floating point number should then be equal to the product of s * M * 2^(E).
 
+The `main` function in `problem2.c` reads and parses the input stream and calls
+appropriate functions to perform the _disassembly_. __Your task is to implement
+those functions so that the output produced is correct.__
 
-
-
-
-
-__Input__
-
-A sequence of floating point numbers terminated by 0.0. The output for 0.0 should not be displayed.
-
-__Output__
-
-Three values into which the values are decomposed into with a single space in between the values.
 
 __Example__
 
-Input:
+|__Input:__|__Output:__ |
+|:---|:---|
+|1024|1 10 1.00000000000000000000<br>1024.00000000000000000000000000000000000000000000000000|
+|-1024|-1 10 1.00000000000000000000<br>-1024.00000000000000000000000000000000000000000000000000|
+|1023|1 9 1.99804687500000000000<br>1023.00000000000000000000000000000000000000000000000000|
+|1025|1 10 1.00097656250000000000<br>1025.00000000000000000000000000000000000000000000000000|
+|0.1|1 -4 1.60000002384185791016<br>0.10000000149011611938476562500000000000000000000000|
+|0.5|1 -1 1.00000000000000000000<br>0.50000000000000000000000000000000000000000000000000|
+|8388608|1 23 1.00000000000000000000<br>8388608.00000000000000000000000000000000000000000000000000|
+|8388609|1 23 1.00000011920928955078<br>8388609.00000000000000000000000000000000000000000000000000|
+|33554432|1 25 1.00000000000000000000<br>33554432.00000000000000000000000000000000000000000000000000|
+|33554432|1 25 1.00000000000000000000<br>33554432.00000000000000000000000000000000000000000000000000|
+|1000000000000000.1|1 49 1.77635681629180908203<br>999999986991104.00000000000000000000000000000000000000000000000000|
+|1e-40|1 -126 0.00850701332092285156<br>0.00000000000000000000000000000000000000009999946101|
+|-1e-40|-1 -126 0.00850701332092285156<br>-0.00000000000000000000000000000000000000009999946101|
+|nan|1 255 0.50000000000000000000<br>nan|
+|-nan|-1 255 0.50000000000000000000<br>nan|
+|inf|1 255 0.00000000000000000000<br>inf|
+|-inf|-1 255 0.00000000000000000000<br>-inf|
+|0| |
 
 
 
-Output:
 
-
-
-
-
-__Deliverables__
-Implementation of the program in `problem2.c` file.
-
-
-__Restrictions__
-
-Your program is not allowed to use ANY of the functions defined in the `math.h` header file.
-Specifically, it is not allowed to use the `pow()` functions to compute values of powers of 2.
-
-
-
-
-__Deliverables__
-Implementation of the program in `problem3.c` file.
+__Deliverables:__
+Implementation of the functions in `float.c` file. You may add
+declarations to the file `float.h` (you have to upload the modified
+  file if you do so).

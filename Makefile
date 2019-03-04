@@ -1,22 +1,40 @@
-# Makefile for project 1
+# Makefile for project 2
 #
 # You should not need to modify this file.
 
 CC		= gcc
 
-CFLAGS		= -g  -Wall
+CFLAGS		= -g  -Wall -std=c99
 
-all: problem1 problem2 problem3
+CLIBS		= -lm 
 
-problem1: problem1.c
-	$(CC) $(CFLAGS) -o problem1 problem1.c
+all: problem1 problem2
 
-problem2: problem2.c
-	$(CC) $(CFLAGS) -o problem2 problem2.c
+problem1: problem1.c bst.o bst.h
+	$(CC) $(CFLAGS) -o problem1 problem1.c bst.o
 
-problem3: problem3.c
-	$(CC) $(CFLAGS) -o problem3 problem3.c
+problem2: problem2.c float.o float.h
+	$(CC) $(CFLAGS) -o problem2 problem2.c float.o  $(CLIBS) 
+
+bst.o: bst.c bst.h
+	$(CC) $(CFLAGS) -c bst.c
+
+float.o: float.c float.h
+	$(CC) $(CFLAGS) -c float.c
+
+run_problem1: problem1
+	./problem1 < test1.in
+
+run_problem2: problem2
+	./problem2 < test2.in
+
+
+test_problem1: problem1
+	valgrind ./problem1  < test1.in
+
+test_problem2: problem2
+	valgrind ./problem2  < test2.in
 
 
 clean:
-	rm -f *~ *.o a.out core problem1 problem2 problem3
+	rm -f *~ *.o a.out core problem1 problem2
