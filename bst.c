@@ -3,45 +3,96 @@
 #include <string.h>
 #include "bst.h"
 
-
 void add ( bst_node ** root, char * word ) {
-  bst_node newNode;
+  bst_node *newNode=(bst_node*)malloc(sizeof(bst_node));
+  newNode->data = word;
+  newNode->left = NULL;
+  newNode->right = NULL;
+  //printf("new node created: %s\n", newNode->data);
   bst_node *currNode = *root;
-  while (currNode != NULL) {
-    int compare = strcmp(*word, currNode->data);
+  
+  if(!*root) { //tree is empty
+    //printf("root word: %s \n", newNode->data);
+    *root = newNode;
+    return;
+  }
+  bst_node *follow = NULL;
+  int flag;
+  while (currNode) { //if currNode not null..
+    int compare = strcmp(word, currNode->data);
+    follow = currNode;
+    // printf("strcmp value is: %d\n", compare);
     if (compare < 0) { //word is smaller than current node's data, go left
-      currNode = &currNode->left;
+      currNode = currNode->left;
+      flag = 1; //newNode is on the left of tree
     }
     else { //go right
-      currNode = &currNode->right;
+      currNode = currNode->right;
+      flag = 0; //newNode is on the right of tree
+    }//endif
+  }//endwhile
+    if(flag){ //newNode belongs on left of node at *follow
+      follow->left = newNode;
+      //printf("ended up on left \n");
     }
-  }
-  *currNode = newNode;
-  newNode.data = *word;
-}
+    else{
+      follow->right = newNode;
+      // printf("ended up on right \n");
+    }//endif
+   
+}//end_add
 
  
 void inorder ( bst_node * root ) {
-  if(root == NULL){
-    printf("\n");
+  
+  if(!root){
     return;
   }
-  inorder(&root->left);
-  printf("&s \n", *root->data);
-  inorder(&root->right);
+  inorder(root->left);
+  if(root){
+    printf("%s ", root->data);
+  }
+  inorder(root->right);
 }
 
 
  
 char * removeSmallest (  bst_node ** root ){
+  bst_node *follower = NULL;
+  bst_node *ptr=*root;
+
+  if(!*root){
+    return;
+  }
+  while(ptr->left != NULL){
+    ptr = ptr->left;
     
-    return NULL;
+   }
+  char *word = ptr->data;
+   follower = ptr->right;
+   free(ptr);
+   ptr = follower;
+
+    return word;
+
 }
 
  
 char * removeLargest (  bst_node ** root ){
-    
-    return NULL;
+    bst_node *follower = NULL;
+    bst_node *ptr =*root;
+    if(!*root){
+      return;
+    }
+    while(ptr->right){
+      ptr = ptr->right; 
+    }
+    char*word= ptr->data;
+    follower = ptr->left;
+    free(ptr);
+    ptr = follower;
+  
+    return word;
 }
 
 

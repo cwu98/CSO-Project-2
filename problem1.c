@@ -14,7 +14,8 @@ int main() {
     
 	bst_node * root = NULL;
 	
-    
+	
+	
     char * instruction = (char*) malloc(256*sizeof(char) ) ;
     char * word = NULL; 
     
