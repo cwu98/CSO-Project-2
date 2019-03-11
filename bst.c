@@ -68,11 +68,11 @@ char * removeSmallest (  bst_node ** root ){
     ptr = ptr->left;
     
    }
-  char *word = ptr->data;
+   char *word = ptr->data;
    follower = ptr->right;
    free(ptr);
    ptr = follower;
-
+ 
     return word;
 
 }

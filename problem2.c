@@ -18,7 +18,6 @@
 
 int main() {
     
-    
     float value;
     int E;
     float M;
