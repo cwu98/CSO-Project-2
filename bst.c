@@ -43,7 +43,7 @@ void add ( bst_node ** root, char * word ) {
       // printf("ended up on right \n");
     }//endif
    
-}//end_add
+    }//end_add
 
  
 void inorder ( bst_node * root ) {
@@ -63,16 +63,23 @@ void inorder ( bst_node * root ) {
 char * removeSmallest (  bst_node ** root ){
   bst_node *follower = NULL;
   bst_node *ptr=*root;
-
+  char *word;
   if(!*root){
     return NULL;
   }
-  while(ptr->left != NULL){
+  else if(ptr->left == NULL){//root is smallest
+    word = ptr->data;
+    (*root) = ptr->right;
+    
+    free(ptr);
+    ptr = NULL;
+    return word;
+  }
+ while(ptr->left != NULL){
     follower = ptr;
     ptr = ptr->left;
-    
-   }
-   char *word = ptr->data;
+   }    
+   word = ptr->data;
    follower->left = ptr->right;
    free(ptr);
    ptr = NULL;
@@ -85,14 +92,22 @@ char * removeSmallest (  bst_node ** root ){
 char * removeLargest (  bst_node ** root ){
     bst_node *follower = NULL;
     bst_node *ptr =*root;
+    char *word;
     if(!*root){
-      return;
+      return NULL;
+    }
+    else if(ptr->right == NULL){//root is largest
+      word = ptr->data;
+      (*root) = ptr->left; //update new root
+      free(ptr);
+      ptr = NULL;
+      return word;
     }
     while(ptr->right){
       follower = ptr;
       ptr = ptr->right; 
     }
-    char*word= ptr->data;
+    word= ptr->data;
     follower->right = ptr->left;
     free(ptr);
     ptr = NULL;
