@@ -48,7 +48,7 @@ void add ( bst_node ** root, char * word ) {
  
 void inorder ( bst_node * root ) {
   
-  if(!root){
+  if(!root){  
     return;
   }
   inorder(root->left);
