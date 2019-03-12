@@ -3,7 +3,7 @@
 #include <string.h>
 #include "bst.h"
 
-/*@author: Cary Wu
+/*
  *Function: program that performs basic operations on a BST based on input
  *input: sequence of instructions from standard input stream
  *output: prints results to standard output stream
