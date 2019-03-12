@@ -9,11 +9,14 @@ void add ( bst_node ** root, char * word ) {
   newNode->left = NULL;
   newNode->right = NULL;
   //printf("new node created: %s\n", newNode->data);
+  if(newNode == NULL){
+    return;
+  }
   bst_node *currNode = *root;
   
   if(!*root) { //tree is empty
     //printf("root word: %s \n", newNode->data);
-    *root = newNode;
+    (*root) = newNode;
     return;
   }
   bst_node *follow = NULL;
@@ -62,18 +65,19 @@ char * removeSmallest (  bst_node ** root ){
   bst_node *ptr=*root;
 
   if(!*root){
-    return;
+    return NULL;
   }
   while(ptr->left != NULL){
+    follower = ptr;
     ptr = ptr->left;
     
    }
    char *word = ptr->data;
-   follower = ptr->right;
+   follower->left = ptr->right;
    free(ptr);
-   ptr = follower;
- 
-    return word;
+   ptr = NULL;
+   //ptr = NULL;
+   return word;
 
 }
 
@@ -85,12 +89,14 @@ char * removeLargest (  bst_node ** root ){
       return;
     }
     while(ptr->right){
+      follower = ptr;
       ptr = ptr->right; 
     }
     char*word= ptr->data;
-    follower = ptr->left;
+    follower->right = ptr->left;
     free(ptr);
-    ptr = follower;
+    ptr = NULL;
+
   
     return word;
 }

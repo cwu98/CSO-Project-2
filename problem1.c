@@ -12,7 +12,7 @@
 int main() {
     
     
-	bst_node * root = NULL;
+   bst_node * root = NULL;
 	
 	
 	
