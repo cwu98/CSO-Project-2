@@ -3,6 +3,17 @@
 #include <string.h>
 #include "bst.h"
 
+/**
+   Program that implements basic operations of a Binary Search Tree
+   @author: Cary Wu
+ */
+
+
+/**
+   Adds a new node to the BST
+   @param: double pointer to the root, char* to be added to the BST
+*/
+ 
 void add ( bst_node ** root, char * word ) {
   bst_node *newNode=(bst_node*)malloc(sizeof(bst_node));
   newNode->data = word;
@@ -45,7 +56,12 @@ void add ( bst_node ** root, char * word ) {
    
     }//end_add
 
- 
+
+/**
+   Print the BST using Inorder traversal
+   @param: pointer to root node
+   @return: void
+*/
 void inorder ( bst_node * root ) {
   
   if(!root){  
@@ -59,7 +75,12 @@ void inorder ( bst_node * root ) {
 }
 
 
- 
+/**
+   Remove and return the (alphabetically) smallest word in the BST
+   @param: double pointer to root node
+   @return: char* of the (alphabetically) smallest word
+*/
+
 char * removeSmallest (  bst_node ** root ){
   bst_node *follower = NULL;
   bst_node *ptr=*root;
@@ -88,7 +109,11 @@ char * removeSmallest (  bst_node ** root ){
 
 }
 
- 
+/**
+   Remove and return the (alphabetically) largest word
+   @param: double pointer to root node of BST
+   @return: char* of (alphabetically) largest word in the BST
+*/
 char * removeLargest (  bst_node ** root ){
     bst_node *follower = NULL;
     bst_node *ptr =*root;

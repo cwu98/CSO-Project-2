@@ -3,10 +3,12 @@
 #include <string.h>
 #include "bst.h"
 
-/*
- *Function: program that performs basic operations on a BST based on input
- *input: sequence of instructions from standard input stream
- *output: prints results to standard output stream
+/**
+   Main driver for program that performs basic operations on a BST based on input
+   @input: sequence of instructions from standard input stream
+   @output: prints results to standard output stream
+   
+   @author: Cary Wu
  */
 
 int main() {
